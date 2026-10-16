@@ -4,7 +4,7 @@ A minimal MERN expense tracker using React/Vite, Express, Mongoose, MongoDB, and
 
 ## Deployed application
 
-- Frontend: https://expense-tracker-lwuof6dgn-tejavullams-projects.vercel.app
+- Frontend: https://expense-tracker-rd24ghmqk-tejavullams-projects.vercel.app
 - Backend API: https://expense-tracker-dpx5.onrender.com
 - Database: MongoDB Atlas (`expense_tracker`)
 
