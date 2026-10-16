@@ -17,7 +17,9 @@ app.use((error, req, res, next) => {
 });
 
 async function startServer() {
-  await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/expense_tracker');
+  const mongoUri = process.env.MONGO_URI;
+  if (!mongoUri) throw new Error('MONGO_URI is required. Configure your MongoDB Atlas connection string in backend/.env');
+  await mongoose.connect(mongoUri);
   const port = Number(process.env.PORT) || 5000;
   return app.listen(port, () => console.log(`Backend listening on port ${port}`));
 }

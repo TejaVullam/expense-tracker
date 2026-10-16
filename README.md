@@ -5,11 +5,22 @@ A minimal MERN expense tracker using React/Vite, Express, Mongoose, MongoDB, and
 ## Prerequisites
 
 - Node.js 18 or newer
-- MongoDB running locally
+- A free MongoDB Atlas cluster
 
 ## Run the application
 
-1. Start MongoDB and create `backend/.env` from `backend/.env.example`.
+1. Create a free MongoDB Atlas cluster, database user, and network access rule:
+   - In Atlas, create an M0 free cluster.
+   - Create a database user with read/write access.
+   - Under Network Access, add your current IP address. For local development only, `0.0.0.0/0` also works but allows connections from anywhere.
+2. Copy the connection string from Atlas and create `backend/.env` from `backend/.env.example`.
+   Replace `<username>`, `<password>`, and `<cluster-url>` with your Atlas values. Keep the URI private and URL-encode special characters in the username or password.
+   The database name must remain `expense_tracker`, for example:
+
+```text
+MONGO_URI=mongodb+srv://my-user:my-password@cluster0.example.mongodb.net/expense_tracker?retryWrites=true&w=majority
+```
+
 2. Install and start the backend:
 
 ```powershell
@@ -18,7 +29,7 @@ npm install
 npm start
 ```
 
-3. In a second terminal, install and start the frontend:
+4. In a second terminal, install and start the frontend:
 
 ```powershell
 cd frontend
@@ -45,7 +56,7 @@ All month values must be `YYYY-MM`. The database is `expense_tracker` and the on
 
 ## Tests
 
-Tests use the isolated database `expense_tracker_test` by default and never touch the application database. Ensure MongoDB is running, then run:
+Tests use the isolated database `expense_tracker_test` by default and never touch the application database. With Atlas, set `MONGO_TEST_URI` to a separate database on the same cluster before running:
 
 ```powershell
 cd backend
@@ -55,7 +66,7 @@ npm test
 To use another isolated MongoDB database, set `MONGO_TEST_URI`, for example:
 
 ```powershell
-$env:MONGO_TEST_URI="mongodb://127.0.0.1:27017/expense_tracker_test"
+$env:MONGO_TEST_URI="mongodb+srv://<username>:<password>@<cluster-url>/expense_tracker_test?retryWrites=true&w=majority"
 npm test
 ```
 
