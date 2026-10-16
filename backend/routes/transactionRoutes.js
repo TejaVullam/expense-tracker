@@ -74,9 +74,11 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) return res.status(400).json({ error: 'Invalid transaction id' });
-    const error = validatePayload(req.body, true);
+    const protectedFields = ['_id', 'createdAt', 'updatedAt', '__v'];
+    const payload = Object.fromEntries(Object.entries(req.body || {}).filter(([key]) => !protectedFields.includes(key)));
+    const error = validatePayload(payload, true);
     if (error) return res.status(400).json({ error });
-    const transaction = await Transaction.findByIdAndUpdate(req.params.id, { $set: req.body }, { returnDocument: 'after', runValidators: true });
+    const transaction = await Transaction.findByIdAndUpdate(req.params.id, { $set: payload }, { returnDocument: 'after', runValidators: true });
     if (!transaction) return res.status(404).json({ error: 'Transaction not found' });
     return res.json(transaction);
   } catch (error) { return validationResponse(error, res); }
