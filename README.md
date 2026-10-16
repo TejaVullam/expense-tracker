@@ -45,6 +45,8 @@ npm run dev
 
 The frontend uses `http://localhost:5000/api` by default. Set `VITE_API_URL` before `npm run dev` if the backend is hosted elsewhere.
 
+The backend is intentionally kept in one application file: `backend/server.js` contains the Express setup, Mongoose schema, database connection, validation, and all transaction endpoints.
+
 ## API
 
 - `GET /api/transactions?month=2026-10` - list transactions for a month, or all transactions without `month`

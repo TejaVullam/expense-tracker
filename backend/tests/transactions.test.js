@@ -1,8 +1,7 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
 const mongoose = require('mongoose');
-const { app } = require('../server');
-const Transaction = require('../models/Transaction');
+const { app, Transaction } = require('../server');
 
 const uri = process.env.MONGO_TEST_URI || 'mongodb://127.0.0.1:27017/expense_tracker_test';
 let server;
