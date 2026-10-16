@@ -8,7 +8,8 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, savin
   const change = (event) => setForm({ ...form, [event.target.name]: event.target.value });
   const submit = (event) => {
     event.preventDefault();
-    onSubmit({ ...form, amount: Number(form.amount) });
+    const { _id, createdAt, updatedAt, ...editableFields } = form;
+    onSubmit({ ...editableFields, amount: Number(form.amount) });
   };
   return <form className="transaction-form" onSubmit={submit}>
     <div className="form-header"><h2>{transaction ? 'Edit transaction' : 'Add transaction'}</h2><button type="button" className="icon-button" onClick={onCancel}>×</button></div>
